@@ -2,6 +2,10 @@ package org.example;
 
 import java.util.Scanner;
 
+import org.example.models.Account;
+import org.example.models.Bank;
+import org.example.models.User;
+
 public class ATM {
     public static void main(String[] args) {
         Scanner sc = new Scanner (System.in);

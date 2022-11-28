@@ -42,12 +42,12 @@ public class ATM {
         return authUser;
     }
 
-    public static void printUserMenu(User theUser, Scanner sc) {
+    public static void printUserMenu(User user, Scanner sc) {
         int choice;
 
         do {
-            System.out.println("Добро пожаловать, " +theUser.getFirstName());
-            theUser.printAccountsSummary();
+            System.out.println("Добро пожаловать, " + user.getFirstName());
+            user.printAccountsSummary();
 
             System.out.println("Выберите действие:");
             System.out.println("  1) Показать историю транзакций");
@@ -64,23 +64,23 @@ public class ATM {
 
         switch (choice) {
             case 1 -> {
-                ATM.showAccountTransactionHistory(theUser , sc);
+                ATM.showAccountTransactionHistory(user, sc);
             }
             case 2 -> {
-                ATM.withdrawFunds(theUser , sc);
+                ATM.withdrawFunds(user, sc);
             }
             case 3 -> {
-                ATM.depositeFunds(theUser , sc);
+                ATM.depositeFunds(user, sc);
             }
             case 4 -> {
-                ATM.transferFunds( theUser , sc);
+                ATM.transferFunds(user, sc);
             }
         }
         if (choice != 5)
-            printUserMenu(theUser, sc);
+            printUserMenu(user, sc);
     }
 
-    public static void transferFunds(User theUser, Scanner sc){
+    public static void transferFunds(User user, Scanner sc){
         int fromAcct;
         int toAcct;
         double amount;
@@ -88,22 +88,21 @@ public class ATM {
 
         do {
             System.out.printf("Введите номер (1-%d) счета, с которого вы хотите перевести средства:",
-                    theUser.numAccounts());
+                    user.numAccounts());
             fromAcct = sc.nextInt()-1;
-            if (fromAcct < 0 || fromAcct >= theUser.numAccounts()) {
+            if (fromAcct < 0 || fromAcct >= user.numAccounts()) {
                 System.out.println("Недействительная учетная запись. Пожалуйста, попробуйте снова.");
             }
-        } while (fromAcct < 0 || fromAcct >= theUser.numAccounts());
-        acctBal = theUser.getAcctBalance(fromAcct);
+        } while (fromAcct < 0 || fromAcct >= user.numAccounts());
+        acctBal = user.getAcctBalance(fromAcct);
 
         do {
-            System.out.printf("Введите номер (1-%d) счета, на который вы хотите перевести средства :",
-                    theUser.numAccounts());
+            System.out.printf("Введите номер (1-%d) счета, на который вы хотите перевести средства :", user.numAccounts());
             toAcct = sc.nextInt()-1;
-            if (toAcct < 0 || toAcct >= theUser.numAccounts()) {
+            if (toAcct < 0 || toAcct >= user.numAccounts()) {
                 System.out.println("Недействительная учетная запись. Пожалуйста, попробуйте снова.");
             }
-        } while (toAcct < 0 || toAcct >= theUser.numAccounts());
+        } while (toAcct < 0 || toAcct >= user.numAccounts());
 
         do {
             System.out.printf("Введите сумму перевода (max $%.02f): $",
@@ -117,10 +116,10 @@ public class ATM {
             }
         } while (amount < 0 || amount > acctBal);
 
-        theUser.addAcctTransaction(fromAcct, -1*amount, String.format(
-                "Перевод на счет %s", theUser.getAcctUUID(toAcct)));
-        theUser.addAcctTransaction(toAcct, amount, String.format(
-                "Перевод со счета %s", theUser.getAcctUUID(fromAcct)));
+        user.addAcctTransaction(fromAcct, -1*amount, String.format(
+                "Перевод на счет %s", user.getAcctUUID(toAcct)));
+        user.addAcctTransaction(toAcct, amount, String.format(
+                "Перевод со счета %s", user.getAcctUUID(fromAcct)));
     }
 
     public static void withdrawFunds(User theUser , Scanner sc){

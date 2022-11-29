@@ -1,4 +1,4 @@
-package org.example.models;
+package org.project.models;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 

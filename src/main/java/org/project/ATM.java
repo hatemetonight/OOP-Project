@@ -1,10 +1,10 @@
-package org.example;
+package org.project;
 
 import java.util.Scanner;
 
-import org.example.models.Account;
-import org.example.models.Bank;
-import org.example.models.User;
+import org.project.models.Account;
+import org.project.models.Bank;
+import org.project.models.User;
 
 public class ATM {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package org.example.models;
+package org.project.models;
 import java.util.ArrayList;
 
 public class Account {

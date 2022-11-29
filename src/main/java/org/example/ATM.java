@@ -64,7 +64,7 @@ public class ATM {
 
         switch (choice) {
             case 1 -> {
-                ATM.showAccountTransactionHistory(user, sc);
+                ATM.getAccountTransactionHistory(user, sc);
             }
             case 2 -> {
                 ATM.withdrawFunds(user, sc);
@@ -188,7 +188,7 @@ public class ATM {
         user.addAcctTransaction(toAcct, amount, memo);
     }
 
-    public static void showAccountTransactionHistory(User user , Scanner sc){
+    public static void getAccountTransactionHistory(User user, Scanner sc) {
         int theAcc ;
 
         do {

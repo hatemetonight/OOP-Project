@@ -8,7 +8,7 @@ import org.example.models.User;
 
 public class ATM {
     public static void main(String[] args) {
-        Scanner sc = new Scanner (System.in);
+        Scanner sc = new Scanner(System.in);
         Bank bank = new Bank("Bank");
         User user = bank.addUser("Maxim", "Belov", "2002");
         Account newAccount = new Account ("savings", user, bank);
@@ -27,10 +27,8 @@ public class ATM {
         User authUser;
         do {
             System.out.printf("\n\nДобро пожаловать в %s\n\n", bank.getName());
-
             System.out.println("Введите ваш ID: ");
             userID = sc.nextLine();
-
             System.out.println("Введите ваш pin-код: ");
             pin = sc.nextLine();
             authUser = bank.userLogin(userID, pin);
@@ -64,7 +62,7 @@ public class ATM {
 
         switch (choice) {
             case 1 -> {
-                ATM.getAccountTransactionHistory(user, sc);
+                ATM.showAccountTransactionHistory(user, sc);
             }
             case 2 -> {
                 ATM.withdrawFunds(user, sc);
@@ -75,9 +73,10 @@ public class ATM {
             case 4 -> {
                 ATM.transferFunds(user, sc);
             }
+            default -> {
+                printUserMenu(user, sc);
+            }
         }
-        if (choice != 5)
-            printUserMenu(user, sc);
     }
 
     public static void transferFunds(User user, Scanner sc){
@@ -87,8 +86,7 @@ public class ATM {
         double acctBal;
 
         do {
-            System.out.printf("Введите номер (1-%d) счета, с которого вы хотите перевести средства:",
-                    user.numAccounts());
+            System.out.printf("Введите номер (1-%d) счета, с которого вы хотите перевести средства:", user.numAccounts());
             fromAcct = sc.nextInt()-1;
             if (fromAcct < 0 || fromAcct >= user.numAccounts()) {
                 System.out.println("Недействительная учетная запись. Пожалуйста, попробуйте снова.");
@@ -98,28 +96,24 @@ public class ATM {
 
         do {
             System.out.printf("Введите номер (1-%d) счета, на который вы хотите перевести средства :", user.numAccounts());
-            toAcct = sc.nextInt()-1;
+            toAcct = sc.nextInt() - 1;
             if (toAcct < 0 || toAcct >= user.numAccounts()) {
                 System.out.println("Недействительная учетная запись. Пожалуйста, попробуйте снова.");
             }
         } while (toAcct < 0 || toAcct >= user.numAccounts());
 
         do {
-            System.out.printf("Введите сумму перевода (max $%.02f): $",
-                    acctBal);
+            System.out.printf("Введите сумму перевода (max $%.02f): $", acctBal);
             amount = sc.nextDouble();
             if (amount < 0) {
                 System.out.println("Сумма должна быть больше нуля.");
             } else if (amount > acctBal) {
-                System.out.printf("Сумма не должна превышать баланс " +
-                        "$.02f.\n", acctBal);
+                System.out.printf("Сумма не должна превышать баланс $.02f.\n", acctBal);
             }
         } while (amount < 0 || amount > acctBal);
 
-        user.addAcctTransaction(fromAcct, -1*amount, String.format(
-                "Перевод на счет %s", user.getAcctUUID(toAcct)));
-        user.addAcctTransaction(toAcct, amount, String.format(
-                "Перевод со счета %s", user.getAcctUUID(fromAcct)));
+        user.addAcctTransaction(fromAcct, -1*amount, String.format("Перевод на счет %s", user.getAcctUUID(toAcct)));
+        user.addAcctTransaction(toAcct, amount, String.format("Перевод со счета %s", user.getAcctUUID(fromAcct)));
     }
 
     public static void withdrawFunds(User user , Scanner sc){
@@ -156,7 +150,7 @@ public class ATM {
         user.addAcctTransaction(fromAcct, -amount, memo);
     }
 
-    public static void depositeFunds(User user , Scanner sc){
+    public static void depositeFunds(User user, Scanner sc) {
         int toAcct;
         double amount;
         double acctBal;
@@ -172,8 +166,7 @@ public class ATM {
         acctBal = user.getAcctBalance(toAcct);
 
         do {
-            System.out.printf("Введите сумму для внесения (max $%.02f): $",
-                    acctBal);
+            System.out.printf("Введите сумму для внесения (max $%.02f): $", acctBal);
             amount = sc.nextDouble();
             if (amount < 0) {
                 System.out.println("Сумма должна быть больше нуля.");
@@ -188,8 +181,8 @@ public class ATM {
         user.addAcctTransaction(toAcct, amount, memo);
     }
 
-    public static void getAccountTransactionHistory(User user, Scanner sc) {
-        int theAcc ;
+    public static void showAccountTransactionHistory(User user, Scanner sc) {
+        int theAcc;
 
         do {
             System.out.printf("Введите номер (1-%d) счета: ", user.numAccounts());

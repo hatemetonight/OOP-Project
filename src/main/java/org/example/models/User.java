@@ -28,7 +28,7 @@ public class User {
                 lastName, firstName, this.uuid);
     }
 
-    public boolean validatePin(String apin){
+    public boolean validatePin(String apin) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             return MessageDigest.isEqual(md.digest(apin.getBytes()), this.pinHash);
@@ -36,7 +36,7 @@ public class User {
             System.out.println("Ошибка, такой алгоритм не найден");
             System.exit(1);
         }
-        return false ;
+        return false;
     }
 
     String getUUID() {
@@ -47,13 +47,13 @@ public class User {
         this.accounts.add(newAccount);
     }
 
-    public String getFirstName(){
+    public String getFirstName() {
         return this.firstName;
     }
 
-    public void printAccountsSummary(){
+    public void printAccountsSummary() {
         System.out.printf("\n\nВаш счет, %s\n", this.firstName);
-        for (int a =0 ; a <this.accounts.size() ; a++){
+        for (int a = 0; a < this.accounts.size(); a++) {
             String line = this.accounts.get(a).getSummaryLine();
             System.out.println(line);
         }
